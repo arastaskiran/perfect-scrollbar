@@ -117,7 +117,7 @@
       this.handlers[eventName] = [];
     }
     this.handlers[eventName].push(handler);
-    this.element.addEventListener(eventName, handler, false);
+    this.element.addEventListener(eventName, handler, {passive: false});
   };
 
   EventElement.prototype.unbind = function unbind (eventName, target) {
@@ -127,7 +127,7 @@
       if (target && handler !== target) {
         return true;
       }
-      this$1.element.removeEventListener(eventName, handler, false);
+      this$1.element.removeEventListener(eventName, handler, {passive: false});
       return false;
     });
   };
@@ -329,8 +329,9 @@
     var roundedScrollTop = Math.floor(element.scrollTop);
     var rect = element.getBoundingClientRect();
 
-    i.containerWidth = Math.ceil(rect.width);
-    i.containerHeight = Math.ceil(rect.height);
+    i.containerWidth = Math.round(rect.width);
+    i.containerHeight = Math.round(rect.height);
+
     i.contentWidth = element.scrollWidth;
     i.contentHeight = element.scrollHeight;
 
